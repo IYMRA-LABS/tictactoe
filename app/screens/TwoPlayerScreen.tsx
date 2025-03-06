@@ -1,8 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import GameBoard from '@/components/GameBoard'; // Assuming GameBoard is the component for the game logic
-import CustomHeader from '../components/CustomHeader'; // Import the custom header
-
 const TwoPlayerScreen = () => {
   const handleReset = () => {
     // Any additional logic on reset can be added here
@@ -10,7 +8,6 @@ const TwoPlayerScreen = () => {
 
   return (
     <View style={styles.container}>
-      <CustomHeader title="Two Player" />
       <Text style={styles.title}>Two Player Mode</Text>
       <View style={styles.gameBoardContainer}>
         <GameBoard onReset={handleReset} isSinglePlayer={false} />

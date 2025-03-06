@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Tic Tac Toe 2025",
-    "slug": "tiktok2",
+    "slug": "tictactoe2025",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo/icon.png",
@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hmyousuf2010.tictactoe2025",
+      "bundleIdentifier": "com.iymralabs.tictactoe2025",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -21,7 +21,8 @@
         "monochromeImage": "./assets/images/logo/adaptiveIcon.png",
         "backgroundColor": "#f0f0f0"
       },
-      "package": "com.hmyousuf2010.tictactoe2025"
+      "package": "com.iymralabs.tictactoe2025",
+      "minSdkVersion": 28
     },
     "web": {
       "bundler": "metro",
@@ -48,16 +49,18 @@
       "typedRoutes": true
     },
     "packagerOpts": {
-      "assetExts": ["svg"]
+      "assetExts": [
+        "svg"
+      ]
     },
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "eb9966d1-cb29-4ea2-b35e-98fddb166d16"
+        "projectId": "a4ca0aa5-f327-4bac-9fc8-851bebc68695"
       }
     },
-    "owner": "hmyousuf2010"
+    "owner": "iymra_labs"
   }
 }

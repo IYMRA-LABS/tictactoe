@@ -3,7 +3,6 @@ import { View, StyleSheet, ImageBackground, Image, TouchableOpacity, Modal, Text
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import CustomHeader from '../components/CustomHeader';
 
 // Define your route names and their params
 type RootStackParamList = {
@@ -29,7 +28,6 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <CustomHeader title="Tic Tac Toe" />
       <ImageBackground
         source={require('../../assets/images/homeBG.png')}
         style={styles.background}

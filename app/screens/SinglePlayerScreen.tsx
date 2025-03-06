@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import GameBoard from '@/components/GameBoard';
-import CustomHeader from '../components/CustomHeader';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const SinglePlayerScreen = () => {
@@ -18,7 +17,6 @@ const SinglePlayerScreen = () => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <CustomHeader title="Single Player" />
       
       <View style={styles.content}>
         <Text style={styles.title}>Choose Difficulty</Text>
