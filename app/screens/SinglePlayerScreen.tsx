@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import GameBoard from '@/components/GameBoard';
 import { LinearGradient } from 'expo-linear-gradient';
+import GameBoard from '@/components/GameBoard';
 
 const SinglePlayerScreen = () => {
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
-
-  const handleDifficultyChange = (level: 'easy' | 'medium' | 'hard') => {
-    setDifficulty(level);
-  };
 
   return (
     <LinearGradient
@@ -19,7 +15,6 @@ const SinglePlayerScreen = () => {
     >
       <View style={styles.content}>
         <Text style={styles.title}>Choose Difficulty</Text>
-        
         <View style={styles.difficultyContainer}>
           {['easy', 'medium', 'hard'].map((level) => (
             <TouchableOpacity
@@ -28,7 +23,7 @@ const SinglePlayerScreen = () => {
                 styles.difficultyButton,
                 difficulty === level && styles.selectedButton
               ]}
-              onPress={() => handleDifficultyChange(level as 'easy' | 'medium' | 'hard')}
+              onPress={() => setDifficulty(level as any)}
             >
               <Text style={styles.buttonText}>
                 {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -36,7 +31,6 @@ const SinglePlayerScreen = () => {
             </TouchableOpacity>
           ))}
         </View>
-
         <View style={styles.gameBoardWrapper}>
           <GameBoard difficulty={difficulty} isSinglePlayer={true} onReset={() => {}} />
         </View>
@@ -59,7 +53,6 @@ const styles = StyleSheet.create({
     color: '#1e293b',
     textAlign: 'center',
     marginVertical: 24,
-    letterSpacing: 0.5,
   },
   difficultyContainer: {
     flexDirection: 'row',
@@ -69,9 +62,9 @@ const styles = StyleSheet.create({
   },
   difficultyButton: {
     backgroundColor: 'rgba(255,255,255,0.9)',
-    paddingVertical: 16,
-    paddingHorizontal: 28,
-    borderRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 12,
     minWidth: 100,
     alignItems: 'center',
     shadowColor: '#000',
@@ -88,7 +81,6 @@ const styles = StyleSheet.create({
     color: '#1e293b',
     fontSize: 16,
     fontWeight: '600',
-    letterSpacing: 0.5,
   },
   gameBoardWrapper: {
     flex: 1,

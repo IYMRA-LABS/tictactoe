@@ -1,17 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import GameBoard from '@/components/GameBoard'; // Assuming GameBoard is the component for the game logic
+import GameBoard from '@/components/GameBoard';
 
 const TwoPlayerScreen = () => {
-  const handleReset = () => {
-    // Any additional logic on reset can be added here
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Two Player Mode</Text>
       <View style={styles.gameBoardContainer}>
-        <GameBoard onReset={handleReset} isSinglePlayer={false} />
+        <GameBoard onReset={() => {}} isSinglePlayer={false} />
       </View>
     </View>
   );
@@ -28,19 +24,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 20,
+    color: '#333',
   },
   gameBoardContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 10,
+    borderRadius: 15,
+    padding: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 4,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
   },
 });
 

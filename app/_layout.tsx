@@ -1,107 +1,81 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, Linking } from 'react-native';
-import { useColorScheme } from '@/hooks/useColorScheme'; // Custom hook for color scheme
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import { Ionicons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ThemeProvider, DefaultTheme } from '@react-navigation/native';
+import { Asset } from 'expo-asset';
+
 import HomeScreen from './screens/HomeScreen';
 import SinglePlayerScreen from './screens/SinglePlayerScreen';
 import TwoPlayerScreen from './screens/TwoPlayerScreen';
-import * as SplashScreen from 'expo-splash-screen';
-
-// Prevent splash screen from hiding until assets are loaded
-SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();
 
-export default function Layout() {
-  const colorScheme = useColorScheme();
+const Layout = () => {
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
     async function prepare() {
       try {
-        // Simulate a delay for demonstration purposes (remove in production)
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await SplashScreen.preventAutoHideAsync();
 
-        // Set appIsReady to true after all assets are loaded
+        // Load all the assets that the app needs
+        const assets = [
+          require('./assets/images/logo/icon.png'),
+          require('./assets/images/logo/adaptiveIcon.png'),
+          require('./assets/images/logo/adaptiveIconDark.png'),
+        ];
+
+        await Asset.loadAsync(assets); // Load all assets asynchronously
+
+        // After all assets are loaded, set appIsReady to true
         setAppIsReady(true);
-      } catch (error) {
-        console.warn('Error preparing app:', error);
-      } finally {
-        // Hide the splash screen only if appIsReady is true
-        if (appIsReady) {
-          await SplashScreen.hideAsync();
-        }
+
+        // Hide the splash screen
+        await SplashScreen.hideAsync();
+      } catch (e) {
+        console.warn(e);
       }
     }
 
     prepare();
-  }, [appIsReady]);
+  }, []);
 
-  // Function to handle Privacy Policy URL redirection
-  const handlePrivacyPolicyPress = () => {
-    Linking.openURL('https://tictactoe2025.vercel.app/privacy-policy.html');
-  };
-
-  // If the app is not ready, return null or a loading indicator
   if (!appIsReady) {
-    return null;
+    return <Text>Loading...</Text>; // Temporary loading text or a splash screen
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={DefaultTheme}>
       <SafeAreaView style={styles.safeArea}>
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            headerShown: true, // Show the header on all screens
-            tabBarActiveTintColor: '#000',
-            tabBarInactiveTintColor: '#666',
-            tabBarStyle: { backgroundColor: '#fff' },
             tabBarIcon: ({ color, size }) => {
               let iconName;
-              if (route.name === 'Home') {
-                iconName = 'home-outline';
-              } else if (route.name === 'Single Player') {
-                iconName = 'person-outline';
-              } else if (route.name === 'Two Player') {
-                iconName = 'people-outline';
-              }
-
+              if (route.name === 'Home') iconName = 'home-outline';
+              if (route.name === 'Single Player') iconName = 'person-outline';
+              if (route.name === 'Two Player') iconName = 'people-outline';
               return <Ionicons name={iconName} size={size} color={color} />;
             },
-            headerStyle: {
+            tabBarActiveTintColor: '#4CAF50',
+            tabBarInactiveTintColor: '#888',
+            tabBarStyle: {
               backgroundColor: '#fff',
-              height: 50,
+              borderTopWidth: 0,
+              paddingBottom: 5,
+              height: 60,
             },
-            headerTitleStyle: {
-              color: '#000',
-            },
-            headerTitleAlign: 'left',
-            headerRight: () => (
-              <Ionicons
-                name="document-text-outline"
-                size={24}
-                color="#000"
-                style={{ marginRight: 10 }}
-                onPress={handlePrivacyPolicyPress}
-              />
-            ),
+            headerShown: false,
           })}
         >
-          <Tab.Screen name="Home" component={HomeScreen} options={{ headerTitle: 'Home' }} />
-          <Tab.Screen name="Single Player" component={SinglePlayerScreen} options={{ headerTitle: 'Single Player' }} />
-          <Tab.Screen name="Two Player" component={TwoPlayerScreen} options={{ headerTitle: 'Two Player' }} />
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Single Player" component={SinglePlayerScreen} />
+          <Tab.Screen name="Two Player" component={TwoPlayerScreen} />
         </Tab.Navigator>
-        <StatusBar style={'auto'} />
       </SafeAreaView>
     </ThemeProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+export default Layout;
