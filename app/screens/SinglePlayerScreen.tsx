@@ -17,7 +17,6 @@ const SinglePlayerScreen = () => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      
       <View style={styles.content}>
         <Text style={styles.title}>Choose Difficulty</Text>
         
@@ -104,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SinglePlayerScreen; 
+export default SinglePlayerScreen;

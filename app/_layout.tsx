@@ -1,33 +1,53 @@
-// layout.tsx
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, Linking } from 'react-native';
 import { useColorScheme } from '@/hooks/useColorScheme'; // Custom hook for color scheme
-
 import HomeScreen from './screens/HomeScreen';
 import SinglePlayerScreen from './screens/SinglePlayerScreen';
 import TwoPlayerScreen from './screens/TwoPlayerScreen';
-
 import * as SplashScreen from 'expo-splash-screen';
 
-// Prevent splash screen from hiding until the assets are loaded
+// Prevent splash screen from hiding until assets are loaded
 SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();
 
 export default function Layout() {
   const colorScheme = useColorScheme();
+  const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    SplashScreen.hideAsync();
-  }, []);
+    async function prepare() {
+      try {
+        // Simulate a delay for demonstration purposes (remove in production)
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        // Set appIsReady to true after all assets are loaded
+        setAppIsReady(true);
+      } catch (error) {
+        console.warn('Error preparing app:', error);
+      } finally {
+        // Hide the splash screen only if appIsReady is true
+        if (appIsReady) {
+          await SplashScreen.hideAsync();
+        }
+      }
+    }
+
+    prepare();
+  }, [appIsReady]);
 
   // Function to handle Privacy Policy URL redirection
   const handlePrivacyPolicyPress = () => {
     Linking.openURL('https://tictactoe2025.vercel.app/privacy-policy.html');
   };
+
+  // If the app is not ready, return null or a loading indicator
+  if (!appIsReady) {
+    return null;
+  }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
@@ -40,7 +60,6 @@ export default function Layout() {
             tabBarStyle: { backgroundColor: '#fff' },
             tabBarIcon: ({ color, size }) => {
               let iconName;
-
               if (route.name === 'Home') {
                 iconName = 'home-outline';
               } else if (route.name === 'Single Player') {
@@ -49,45 +68,32 @@ export default function Layout() {
                 iconName = 'people-outline';
               }
 
-              return <Ionicons name:String={iconName} size={size} color={color} />;
+              return <Ionicons name={iconName} size={size} color={color} />;
             },
-            // Header styling for background color, text color, and centering
             headerStyle: {
-              backgroundColor: '#fff', // White background for header
-              height: 50, // Set a smaller header height
+              backgroundColor: '#fff',
+              height: 50,
             },
             headerTitleStyle: {
-              color: '#000', // Black text for the header title
+              color: '#000',
             },
-            headerTitleAlign: 'left', // Align the title to the left
+            headerTitleAlign: 'left',
             headerRight: () => (
               <Ionicons
                 name="document-text-outline"
                 size={24}
                 color="#000"
-                style={{ marginRight: 10 }} // Add space to the right
-                onPress={handlePrivacyPolicyPress} // Open the Privacy Policy link when clicked
+                style={{ marginRight: 10 }}
+                onPress={handlePrivacyPolicyPress}
               />
             ),
           })}
         >
-          <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ headerTitle: 'Home' }}
-          />
-          <Tab.Screen
-            name="Single Player"
-            component={SinglePlayerScreen}
-            options={{ headerTitle: 'Single Player' }}
-          />
-          <Tab.Screen
-            name="Two Player"
-            component={TwoPlayerScreen}
-            options={{ headerTitle: 'Two Player' }}
-          />
+          <Tab.Screen name="Home" component={HomeScreen} options={{ headerTitle: 'Home' }} />
+          <Tab.Screen name="Single Player" component={SinglePlayerScreen} options={{ headerTitle: 'Single Player' }} />
+          <Tab.Screen name="Two Player" component={TwoPlayerScreen} options={{ headerTitle: 'Two Player' }} />
         </Tab.Navigator>
-        <StatusBar style={'auto' as 'auto' | 'light' | 'dark' | 'inverted'} />;
+        <StatusBar style={'auto'} />
       </SafeAreaView>
     </ThemeProvider>
   );

@@ -21,8 +21,7 @@
         "monochromeImage": "./assets/images/logo/adaptiveIcon.png",
         "backgroundColor": "#f0f0f0"
       },
-      "package": "com.iymralabs.tictactoe2025",
-      "minSdkVersion": 28
+      "package": "com.iymralabs.tictactoe2025"
     },
     "web": {
       "bundler": "metro",

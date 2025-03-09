@@ -29,13 +29,13 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../assets/images/homeBG.png')}
+        source={require('../../assets/images/homeBG.png')} // Ensure this path is correct
         style={styles.background}
       >
         <View style={styles.overlay}>
           <TouchableOpacity onPress={handleStartPress} style={styles.startButton}>
             <Image
-              source={require('../../assets/images/St_btn.png')}
+              source={require('../../assets/images/St_btn.png')} // Ensure this path is correct
               style={styles.startButtonImage}
             />
           </TouchableOpacity>

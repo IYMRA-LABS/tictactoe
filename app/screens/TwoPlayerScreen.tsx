@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import GameBoard from '@/components/GameBoard'; // Assuming GameBoard is the component for the game logic
+
 const TwoPlayerScreen = () => {
   const handleReset = () => {
     // Any additional logic on reset can be added here
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 20,
-    fontFamily: 'Arial', // Use a custom font if available
   },
   gameBoardContainer: {
     flex: 1,
@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TwoPlayerScreen; 
+export default TwoPlayerScreen;
