@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: 100,
+    paddingBottom: 200,
   },
   startButton: {
     width: 250,
